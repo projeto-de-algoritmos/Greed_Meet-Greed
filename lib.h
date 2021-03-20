@@ -1,28 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <errno.h>
 
 typedef struct agenda{
     int horarios[120];
     int total;
 }a;
 
-a *newAgenda(int op){
+a *newAgenda(){
     a *newA =  malloc(sizeof(a *));
 
-    if(op == 1){
-        for(int i = 0; i < 120; i++){
-            newA->horarios[i] = 0;
-        }
-        newA->total = 0;
-    }else{
-        // FILE *f;
-        // f = fopen("agenda.txt", "r");
-        //     for(int i = 0; i < 120; i++){
-        //         fscanf(f, "%d", &newA->horarios[i]);
-        //     }
-        //     fscanf(f, "%d", &newA->total);
-        // fclose(f);
+    for(int i = 0; i < 120; i++){
+        newA->horarios[i] = 0;
+        printf("%d %d\n", i, newA->horarios[i]);
     }
+    newA->total = 0;
 
     return newA;
 }
@@ -64,11 +57,13 @@ a *agendar(a *agenda){
             }
 
             if(flag == 0){
-                printf("Horario para reuniao encontrado!\n");
+                printf("Reuniao Marcada!\n");
                 quant++;
                 for(int j = i; j < i+dur; j++){
                     agenda->horarios[j] = quant;
                 }
+
+                agenda->total++;
                 break;
             }
         }else if(agenda->horarios[i] != atual){
@@ -116,13 +111,4 @@ void show(a *agenda){
         system("clear");
         printf("Agenda Vazia!\n");
     }
-}
-
-void save(a *agenda){
-    FILE *p;
-    p = fopen("agenda.txt", "w");
-        for(int i = 0; i < 110; i++){         
-            fprintf(p, "%d ", agenda->horarios[i]);
-        }
-    fclose(p);
 }
