@@ -13,7 +13,7 @@ void menu(){
     system("clear");
     printf("Bem-Vindo ao Meet&Greed (Horario de Funcionamento: 08h as 18h)\n");
     printf("Digite o numero da operacao:\n");
-    printf("1 - Agendar reuniao\n2 - Cancelar reuniao\n3 - Visualizar agenda\n4 - Salvar\n5 - Sair\n");
+    printf("1 - Agendar reuniao\n2 - Cancelar reuniao\n3 - Visualizar agenda\n4 - Salvar\n5 - Sair\n>");
     
     int op;
     scanf("%d", &op);
@@ -47,12 +47,12 @@ void menu(){
 
 
 void start(){
-    printf("Digite o numero da sua escolha:\n1 - Usar agenda existente\n2 - Criar nova agenda\n:");
+    printf("Digite o numero da sua escolha:\n1 - Usar agenda existente\n2 - Criar nova agenda\n>");
     int op;
     scanf("%d", &op);
     while(op < 1 || op > 2){
         system("clear");
-        printf("Digite o numero da sua escolha:\n1 - Usar agenda existente\n2 - Criar nova agenda\n:");
+        printf("Digite o numero da sua escolha:\n1 - Usar agenda existente\n2 - Criar nova agenda\n>");
         scanf("%d", &op);
     };
 

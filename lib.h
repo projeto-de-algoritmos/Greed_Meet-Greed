@@ -63,46 +63,60 @@ a *agendar(a *agenda){
     int atual = 0, atualDur = 0;
 
     //Variaveis pra ver se eh possivel encaixar direto
-    int cabe = -1, vazio = 0, pos;
+    int cabe = 0, vazio = 0, pos = -1, totalVazio = 0;
 
     //Percorro tudo
     for(int i = 0; i < 120; i++){
         if(agenda->horarios[i] != 0){//Ver se tem reuniao
             if(agenda->horarios[i] != atual){//Ver se eh outra reuniao
-                quant++;
+
+                quant++;//Aumentar a contagem de reunioes
+
                 if(atual > 0){
-                    reunioes[atual-1] = atualDur;
+                    reunioes[atual-1] = atualDur;//Coloco na lista
                 }
                 atualDur = 1;
                 atual = agenda->horarios[i];
                 vazio = 0;
             }
         }else{
+            totalVazio++;
+            if(totalVazio >= dur){
+                cabe = 1;
+            }
+
             if(vazio == 0){
                 vazio = 1;
                 atualDur = 1;
-            }else if(cabe == -1){
+            }else{
                 atualDur++;
-                if(atualDur >= dur){
-                    cabe = i+1;
-                    pos = quant++;
+                if(atualDur >= dur && pos == -1){
+                    pos = i-dur+1;
+                    quant++;
                 }
             }
         }
     }  
 
-    if(cabe == -1){
+    if(cabe == 0){
+        for(int i = 0; i < agenda->total; i++){
+            if(reunioes[i]+totalVazio >= dur && reunioes[i] < dur){
+                printf("%d", i+1);
+            }
+        }
+        if(cabe == 1){
 
+        }
     }else{
-        for(int j = cabe-dur; j <= cabe; j++){
+        for(int j = pos; j <= pos+dur; j++){
             agenda->horarios[j] = quant;
         }
     }
 
-    if(cabe == -1){
+    if(cabe == 0){
         printf("Reuniao nao pode ser agendada!\n");
     }else{
-        printf("Reuniao agendada!\nNumero da reuniao: %d\nHorario de Inicio:%.2dh%.2d\n", quant, calcHora(cabe-dur), calcMinuto(cabe-dur));
+        printf("Reuniao agendada!\nNumero da reuniao: %d\nHorario de Inicio:%.2dh%.2d\n", quant, calcHora(pos), calcMinuto(pos));
     }
 
 
@@ -110,7 +124,52 @@ a *agendar(a *agenda){
 }
 
 a *remover(a *agenda){
+    int re, flag = 0, i = 0, size = 1, start;
+
     system("clear");
+    printf("Digite o numero da reuniao que deseja remover: ");
+    scanf("%d", &re);
+
+    while(flag != 2){
+        if(agenda->horarios[i] == re && flag == 0){
+            flag = 1;
+            start = i;
+        }else if(agenda->horarios[i] == re && flag == 1){
+            size++;
+        }else if(agenda->horarios[i] != re && flag == 1){
+            flag = 2;
+        }
+        i++;
+    };
+    if(size == 0){
+        printf("Reuniao nao encontrada!\n");
+        return agenda;
+    }else{
+        printf("Deseja adiantar as reunioes possiveis?\n1 - Sim\n2 - Nao\n>");
+        int op;
+        scanf("%d", &op);
+
+        if(op == 1){//Adiantar as reunioes
+            for(int j = 0; j < 120; j++){
+                if(j >= start && j < 120-size){
+                    if(agenda->horarios[j+size] == 0){
+                        agenda->horarios[j] = agenda->horarios[j+size];
+                    }else{
+                        agenda->horarios[j] = agenda->horarios[j+size]-1;
+                    }
+                }else if(j >= 120-size){
+                    agenda->horarios[j] = 0;
+                }
+            }
+        }else{//So deletar
+            for(int j = start; j < start+size; j++){
+                agenda->horarios[j] = 0;
+            }
+        }
+    }
+
+    system("clear");
+    printf("Reuniao %d cancelada!\nTodas as reunioes foram renumeradas!\n", re);
     return agenda;
 }
 
@@ -118,12 +177,12 @@ void show(a *agenda){
     int atual = 0, dur = 0, num = 0;
 
     system("clear");
-    printf("||Reunioes Agendadas||\n");
+    printf("||Reunioes Agendadas||\n-------------\n\n");
 
     for(int i = 0; i < 120; i++){
         if(agenda->horarios[i] != atual){
             if(atual != 0){
-                printf("Reuniao Numero %d:\nA Sala Ficara Ocupada das %.2dh%.2d as %.2dh%.2d\n", num, calcHora(i-dur), calcMinuto(i-dur), calcHora(i-1), calcMinuto(i-1));
+                printf("Reuniao Numero %d:\nA Sala Ficara Ocupada das %.2dh%.2d as %.2dh%.2d\n-------------\n\n", num, calcHora(i-dur), calcMinuto(i-dur), calcHora(i-1), calcMinuto(i-1));
             }
 
             if(agenda->horarios[i] != 0){
@@ -146,9 +205,29 @@ void show(a *agenda){
 void save(a *agenda){
     FILE *fp = fopen("agenda.txt", "w");
         for(int i = 0; i < 120; i++){  
+            system("clear");
+            printf("Salvando");
+
+            switch(i%3){
+                case 0:
+                    printf("...\n");
+                break;
+
+                case 1:
+                    printf(".\n");
+                break;
+
+                case 2:
+                    printf("..\n");
+                break;
+            }
+        
             fprintf(fp, "%d ", agenda->horarios[i]);
         }
 
         fprintf(fp, "%d", agenda->total);
     fclose(fp);
+
+    system("clear");
+    printf("Agenda Salva!\n");
 }
