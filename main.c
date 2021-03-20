@@ -3,7 +3,7 @@ int flag = -1;
 a *agenda;
 
 void pressione(){
-    printf("pressione enter tecla pra continuar...\n");
+    printf("pressione enter pra continuar...");
     getchar();
     getchar();
 }
