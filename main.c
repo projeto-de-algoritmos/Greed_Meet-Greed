@@ -2,29 +2,44 @@
 int flag = -1;
 a *agenda;
 
+void pressione(){
+    printf("pressione qualquer tecla pra continuar...\n");
+    getchar();
+    getchar();
+}
+
 
 void menu(){
+    system("clear");
     printf("Digite o numero da operacao:\n");
-    printf("0 - Agendar reuniao\n
-            1 - Remover reuniao\n
-            2 - Visualizar agenda\n
-            3 - Salvar alteracoes\n");
+    printf("0 - Agendar reuniao\n1 - Remover reuniao\n2 - Visualizar agenda\n3 - Salvar alteracoes\n4 -Sair\n");
     
     int op;
     scanf("%d", &op);
 
-    swicth(op){
+    switch(op){
         case 0:
-            agendar();
+            agendar(agenda);
+            pressione();
+            menu();
         break;
         case 1:
-            remover();
+            remover(agenda);
+            pressione();
+            menu();
         break;
         case 2:
-            show();
+            show(agenda);
+            pressione();
+            menu();
         break;
         case 3:
-            save();
+            save(agenda);
+            pressione();
+            menu();
+        break;
+        case 4:
+            exit(0);
         break;
     }
 }
@@ -35,9 +50,12 @@ void mainMenu(){
 
     if(flag == -1){
         int op;
-        printf("Digite o numero da operacao:\n0 -Usar a Agenda Existente\n1 -Criar nova Agenda");
+        printf("Digite o numero da operacao:\n0 -Usar a Agenda Existente\n1 -Criar nova Agenda\n:");
+        scanf("%d", &op);
         flag = op;
         agenda = newAgenda(op);
+        printf("%d", agenda->horarios[0]);
+        menu();
     }else{
         menu();
     }
