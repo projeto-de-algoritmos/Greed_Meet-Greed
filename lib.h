@@ -40,3 +40,19 @@ void newReunion(int d, int s[], int e[]){
     newR->end[0] = e[0];
     newR->end[0] = e[1];
 }
+
+void agendar(){
+
+}
+
+void remover(){
+
+}
+
+void show(){
+
+}
+
+void save(){
+    
+}
