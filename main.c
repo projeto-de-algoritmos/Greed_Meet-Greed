@@ -12,19 +12,19 @@ void pressione(){
 void menu(){
     system("clear");
     printf("Digite o numero da operacao:\n");
-    printf("0 - Agendar reuniao\n1 - Remover reuniao\n2 - Visualizar agenda\n3 - Salvar alteracoes\n4 -Sair\n");
+    printf("0 - Agendar reuniao\n1 - Remover reuniao\n2 - Visualizar agenda\n3 - Salvar alteracoes\n4 - Sair\n");
     
     int op;
     scanf("%d", &op);
 
     switch(op){
         case 0:
-            agendar(agenda);
+            agenda = agendar(agenda);
             pressione();
             menu();
         break;
         case 1:
-            remover(agenda);
+            agenda = remover(agenda);
             pressione();
             menu();
         break;
@@ -54,7 +54,6 @@ void mainMenu(){
         scanf("%d", &op);
         flag = op;
         agenda = newAgenda(op);
-        printf("%d", agenda->horarios[0]);
         menu();
     }else{
         menu();
