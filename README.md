@@ -13,7 +13,10 @@
 Uma interface simples para fazer o melhor agendamento possivel para uma sala de reunioes
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+![Menu Inicial](https://github.com/projeto-de-algoritmos/Greed_Meet-Greed/blob/master/images/Menu%201.PNG)
+![Menu Principal](https://github.com/projeto-de-algoritmos/Greed_Meet-Greed/blob/master/images/Menu%202.PNG)
+![Agendar Reuniao](https://github.com/projeto-de-algoritmos/Greed_Meet-Greed/blob/master/images/Agendar.PNG)
+![Visualizar](https://github.com/projeto-de-algoritmos/Greed_Meet-Greed/blob/master/images/Show.PNG)
 
 ## Instalação 
 **Linguagem**: C<br>
@@ -21,10 +24,8 @@ Adicione 3 ou mais screenshots do projeto em funcionamento.
 Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 
 ## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
-
-## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
+gcc main.c -o a
+./a
 
 
 
